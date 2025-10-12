@@ -33,6 +33,7 @@ public class Racetrack {
 	private ArrayList<Integer> weights = new ArrayList<Integer>();
 
 	public int w, h;
+	private boolean success = true;
  
 	private <T> void LOGN( T x )	{
 		System.out.println(x);
@@ -68,13 +69,16 @@ public class Racetrack {
 			if(adj_x > w-1 || adj_x < 0) continue;
 			if(adj_y > h-1 || adj_y < 0) continue;
 			
+			//Get weight coordinates in array.
 			int index = adj_x + adj_y * w; 
  			
+			//grab weight from array.
 			int adj_weight = weights.get( index );
 			
+			//If spot in array is open then take it.
 			if(adj_weight == -1)
 			{
-				
+				//Need to set changes to true indicating that the function needs to recurse.
   				weights.set(adj_x + adj_y * w, val);
   				changes = true;
 			}
@@ -84,6 +88,8 @@ public class Racetrack {
 	
 	private void computeWeights()
 	{
+		//Setting up the weights array by iterating through the track array
+		
 		for( int y=0; y<h ; y++)
 		{
 			for(int x=0; x<w; x++)
@@ -107,6 +113,7 @@ public class Racetrack {
 	
 	private void compute(int start)
 	{	
+		//The prime function that iterates through the weights array to fill the empty weights accordingly. 
 		boolean changed = false;
 		
 		for( int y=0; y<h ; y++)
@@ -134,7 +141,6 @@ public class Racetrack {
 			while(input.hasNext()) 
 			{	
 				String s = input.next();
-				
 				this.h++;
 				this.w = s.length();
 				track.add( s );
@@ -143,12 +149,19 @@ public class Racetrack {
 		}
   		catch(FileNotFoundException e)
   		{
+  			success = false;
 			System.out.println(e);
  		}
  	}
 	
 	public void print()
 	{
+		//Prints current weight array.
+		if(!success)
+		{
+			System.out.println("Cannot print track.");
+			return;
+		}
  		
 		LOGN("=================TRACK WEIGHTS===================");	
  		

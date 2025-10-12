@@ -11,15 +11,19 @@ public class Main {
 \____|__  (____  /\____ |\___  >  |___  / ____|  \______  /\____/|____/__|___|  /  \______  /\____/|____/|____(____  /__|   |__|  
         \/     \/      \/    \/       \/\/              \/                    \/          \/                       \/             
         
+  
+  READ: YOU MUST PUT YOUR TRACK IN THE Tracks FOLDER IN THE FORM OF A TXT DOCUMENT IN ORDER FOR IT TO GENERATE.**
+        
 */
 	
 	public static void main(String[] args)
 	{
 		long last = System.nanoTime();
 		
-		Racetrack racetrack = new Racetrack("track1.txt"); //Change path accordingly
-		System.out.printf( "Track generated in: %.3f seconds \n\n", (float)(System.nanoTime() - last) / 1_000_000_000.0 );
+		String examplePath = "./Tracks/track1.txt";  //Change path accordingly**
+		Racetrack racetrack = new Racetrack(examplePath); //Set up track
 		
-		racetrack.print();
+		System.out.printf( "Track generated in: %.3f seconds \n\n", (float)(System.nanoTime() - last) / 1_000_000_000.0 );
+		racetrack.print(); //Print track
 	}
 }
