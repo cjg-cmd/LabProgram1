@@ -32,8 +32,7 @@ public class Racetrack {
 	private ArrayList<String> track = new ArrayList<String>(); //Contains weights
 	private ArrayList<Integer> weights = new ArrayList<Integer>();
 
-	public String test = "2";
-	public int w, h;
+ 	public int w, h;
 	private boolean success = true;
  
 	private <T> void LOGN( T x )	{
