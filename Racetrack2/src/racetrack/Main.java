@@ -16,7 +16,7 @@ public class Main {
         
   
   READ: YOU MUST PUT YOUR TRACK IN THE Tracks FOLDER IN THE FORM OF A TXT DOCUMENT IN ORDER FOR IT TO GENERATE.**
-  THANK YOU!
+  THANK YOU.
         
 */
 	
