@@ -16,7 +16,7 @@ public class Main {
         
   
   READ: YOU MUST PUT YOUR TRACK IN THE Tracks FOLDER IN THE FORM OF A TXT DOCUMENT IN ORDER FOR IT TO GENERATE.**
-  THANK YOU!
+  THANK YOU.
         
 */
 	
@@ -27,6 +27,34 @@ public class Main {
 	{
 		car.setPos(track);
 		cars.add(car);
+	}
+	
+	public static void generatePath(Car car, Racetrack track)
+	{
+		for(int i=0; i<car.poses.size(); i++)
+		{
+			
+			if(i==car.poses.size()-1)
+			{
+				break;
+			}
+			
+			Position pos0 = car.poses.get(i);
+			Position pos1 = car.poses.get(i+1);
+			
+			int x0 = pos0.getCol();
+			int y0 = pos0.getRow();
+			
+			int x1 = pos1.getCol();
+			int y1 = pos1.getRow();
+			
+			Path path = new Path(x0,y0,x1,y1,track);
+			
+			path.setVisible(true);
+			path.setID(car.getIdNumber());
+			path.GetResults();
+			
+		}
 	}
 	
 	public static void displayInfo(Racetrack track)
@@ -63,10 +91,21 @@ public class Main {
 		Racetrack racetrack = new Racetrack(examplePath); //Set up track
 		
 		//Add cars to 'cars' list.
-		addCar(new CPUCar('1'), racetrack);
-		addCar(new CPUCar('2'), racetrack);
-		addCar(new CPUCar('3'), racetrack);		
+		
+		
+		//CPUS!
+		CPUCar sportsCar = new CPUCar('1',"SPORT"); //Focuses on speed, move to lowest weight, will crash often.
+		
+		CPUCar agileCar = new CPUCar('2',"AGILE"); //Check path before moving. Select the best that does not result in collision.
+		
+		CPUCar userCar = new CPUCar('3', "USER"); //Check path before moving. Select the best that does not result in collision.
 
+ 		//USER CAR 
+		
+		addCar(sportsCar, racetrack);
+		addCar(agileCar, racetrack);
+		//addCar(userCar, racetrack);
+ 
 		racetrack.displayBanner();
 		
 		/** ======== START LOOP ======== **/
@@ -85,24 +124,34 @@ public class Main {
 			Car car = getNextCar(order);
 
 			System.out.println("*****CAR "+car.getIdNumber()+"'s TURN!*****");
+			
 			car.move(racetrack);
-			racetrack.print();
+
+
+
+ 			racetrack.print();
  
 			//Break loop if winner is found.
 			if( car.getWinner() ) {
+				
+				generatePath(car,racetrack);
+				
 				System.out.println("CAR "+car.getIdNumber()+" WINS!");
+				
 				racetrack.print();
 				displayInfo(racetrack);
 
  				FinishLineReached = true;
  				break;
 			}
+ 
 			
+			racetrack.print();
+ 			
 			displayInfo(racetrack);
-			System.out.println();
 			
-			car.updateCarInfo(racetrack, car.getRow(), car.getCol());
 			System.out.println();
+ 			System.out.println();
 						
 			order++;
 		
