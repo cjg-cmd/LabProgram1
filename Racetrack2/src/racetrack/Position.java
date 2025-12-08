@@ -14,6 +14,9 @@ public class Position {
 	}
 	/**
 	* Get / Set Methods
+	* 
+	*C
+	* 
 	*/
 	
 	public boolean collides(Racetrack track, Car car)
