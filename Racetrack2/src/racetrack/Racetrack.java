@@ -73,7 +73,7 @@ public class Racetrack {
     
     public boolean occupied(int row, int col)
     {
-    	return getCar(row, col)!='0';
+    	return getCar(row, col) != '0';
     }
     
     public void setCar(int row, int col, char value)

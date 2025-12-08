@@ -1,5 +1,6 @@
 
 package racetrack;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 abstract public class Car {
@@ -24,6 +25,9 @@ abstract public class Car {
     private int moveOrder;
     /** Static member used for order initialization **/
     public static int order;
+    
+ 	public ArrayList<Position> poses = new ArrayList<Position>();
+
 
     /** Constructor */
     Car(char id){
@@ -50,7 +54,10 @@ abstract public class Car {
 
     /** Set or move car to position on the track **/
     public void setCarMove(Racetrack track) {
+    	
+    	track.setCar(row, col, this.getIdNumber());
         track.setTrack(this.getRow(),this.getCol(), this.getIdNumber());
+        
     }
     
     public void setPos(Racetrack track)
@@ -80,9 +87,11 @@ abstract public class Car {
 			}			
 		}
 		
+		poses.add(new Position( h_row, h_col ));
+		
 		this.updateCoordinates(h_row, h_col);
 		this.updateVelocity(h_row, h_col);
-		track.setCar(h_row, h_col, this.idNumber);
+		track.setCar(h_row, h_col, this.getIdNumber());
 		
     }
     
@@ -96,7 +105,7 @@ abstract public class Car {
     public void updateVelocity(int row, int col) {
         this.setRowVelocity(Math.min(row, maxSpeed));
         this.setColVelocity(Math.min(col, maxSpeed));
-    }
+     }
 
     /** Wrapper Method updating cars current stats and position 
 	** pre - requires the racetrack and new row/col position of car
@@ -104,14 +113,16 @@ abstract public class Car {
 	**/
     public void updateCarInfo(Racetrack track, int newRow, int newCol) {
 
+        track.setCar(this.getRow(), this.getCol(),'0');
+        track.setTrack(this.getRow(),this.getCol(),'T');
+        
         int rowVelocity = Math.abs(this.getRow() - newRow);
         int colVelocity = Math.abs(this.getCol() - newCol);
-
-        track.setTrack(this.getRow(), this.getCol(),'T');
         
         this.updateCoordinates(newRow,newCol);
         this.setWeightPosition(track.getWeight(newRow,newCol));
-        this.updateVelocity(this.getRowVelocity() + rowVelocity,this.getColVelocity() + colVelocity);
+                
+        this.updateVelocity(this.getRowVelocity()+rowVelocity,this.getColVelocity() + colVelocity);
         this.setCarMove(track);
 		// Pause race after each move
 		System.out.print("Press any key and enter to continue: ");
@@ -125,8 +136,7 @@ abstract public class Car {
         }
         rowVelocity = 1;
         colVelocity = 1;
-        System.out.println("Car " + idNumber + " crashed!");
-    }
+     }
 
     /** Default move for testing **/
     public void useDefaultMove(Racetrack track){
